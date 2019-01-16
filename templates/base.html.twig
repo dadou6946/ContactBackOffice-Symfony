@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('home') }}">Mon site</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.user %}disabled{% endif %}" href="{{ path('contact') }}">Contactez nous</a>
+                    </li>
+                    {% if app.user %}
+                        <li class="nav-item right">
+                            <a class="nav-link" href="{{ path('admin') }}">Back Office</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav text-right">
+                    {% if not app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path('login') }}" class="nav-link">Connexion</a>
+                        </li>
+                    {% endif %}
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path('logout') }}" class="nav-link">Déconnexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

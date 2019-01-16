@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message n°{{ message.id }}{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron text-center">
+        <h1>Message n°{{ message.id }}</h1>
+
+    </div>
+    <div class="container">
+
+        {% include "_flash.html.twig" %}
+
+        <div class="row">
+            <div class="col-md-3 text-right">
+                <span class="badge badge-secondary">Nom : </span>
+            </div>
+            <div class="col-md-9">
+                <span class="text-justify">{{ message.name}}</span>
+            </div>
+            <div class="col-md-3 text-right">
+                <span class="badge badge-secondary">Email : </span>
+            </div>
+            <div class="col-md-9">
+                <span class="text-justify">{{ message.mail}}</span>
+            </div>
+            <div class="col-md-3 text-right">
+                <span class="badge badge-secondary">Contenu du message : </span>
+            </div>
+            <div class="col-md-9">
+                <p class="text-justify">{{ message.content}}</p>
+            </div>
+            <div class="col-md-3 text-right">
+                <span class="badge badge-secondary">Statut : </span>
+            </div>
+            <div class="col-md-9">
+                {% if message.state == 0 %}
+                    <p class="alert alert-danger">En attente de traitement</p>
+                {% endif %}
+                {% if message.state == 1 %}
+                    <p class="alert alert-success">Traité</p>
+                {% endif %}
+            </div>
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    {% if message.state == 0 %}
+                        <a href="{{ path("admin.message.edit", {id: message.id}) }}" class="btn btn-secondary form-control">Marquer comme traité</a>
+                    {% endif %}
+                    {% if message.state == 1 %}
+                        <a href="{{ path("admin.message.edit", {id: message.id}) }}" class="btn btn-secondary form-control">Rétablir en attente de traitement</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{%  block stylesheets %}
+{%  endblock %}
+
+{% block javascripts %}
+{%  endblock %}
